@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Главная страница
+{% endblock title %}
+
+
+{% block content %}
+<h3 class="text-center">Категории</h3>
+
+<div class="row">
+    {% for article in articles %}
+    <div class="col-6">
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if article.image %}
+                    <img src="{{ article.image.url }}" class="img-fluid rounded-start h-100" alt="...">
+                    {% else %}
+                    <img src="https://studenthack.uz/wp-content/uploads/2021/11/%D0%A4%D0%BE%D1%82%D0%BE-%D1%81%D0%BA%D0%BE%D1%80%D0%BE-%D0%B1%D1%83%D0%B4%D0%B5%D1%82.png"
+                         class="img-fluid rounded-start h-100 w-200" alt="...">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text">{{ article.content|truncatechars:50 }}</p>
+                        <div class="card-text">
+                            Автор:
+                            <a href="{% url 'author_articles' article.author.username %}" class="text-dark">
+                                <b><i>{{ article.author }}</i></b>
+                            </a>
+                        </div>
+                        <p class="card-text">
+                            <small class="text-body-secondary">Last updated <b>{{ article.updated_at.time }}</b></small>
+                        </p>
+                        <a href="{{ article.get_absolute_url }}" class="btn btn-primary">Подробнее..</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
